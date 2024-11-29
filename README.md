@@ -66,23 +66,25 @@ This project implements Role-Based Access Control (RBAC) where an admin can add 
 
 ```sh
 rbac-product/
-├── assets/
-│   └── images/
-├── src/
-│   ├── components/
-│   ├── utils/
-│   ├── firebase.js
-│   ├── app.js
-│   └── ...
-├── .env
-├── package.json
-└── README.md
+├── img/
+├── admin.html
+├── app.js
+├── approve.js
+├── cors.json
+├── Designer.html
+├── Developer.html
+├── firebase.js
+├── index.html
+├── Manager.html
+├── package-lock.json
+├── script.js
+├── style.css
+└── Tester.html
+
 ```
 
 - `firebase.js`: Contains Firebase configuration and database interaction.
 - `app.js`: Main app logic including product assignment and user login.
-- `components/`: Contains reusable UI components like login forms, product assignment forms, etc.
-- `utils/`: Utility functions for handling specific actions like authentication, product management, etc.
 
 ---
 
@@ -182,6 +184,27 @@ function confirmAndDelete(email) {
 ```
 
 ---
+## Images
+### **Login Page**
+
+![image](https://github.com/user-attachments/assets/11c8a4ab-57b8-4c55-aeef-58df7c23dbd6)
+
+### **Projects Dashboard on Admin Page**
+![image](https://github.com/user-attachments/assets/4c67c401-1640-4e80-bc52-c059bcaf0b83)
+
+
+### **Approval Requests on Admin Page**
+![image](https://github.com/user-attachments/assets/b757ea93-9aed-4c26-87a6-1183de4f17cb)
+
+### **Security Key on Admin Page**
+Changing Security Key of Admin Login
+![image](https://github.com/user-attachments/assets/53c70a18-c393-422f-899e-d78a76defbab)
+
+### **User Page**
+The projects assigned to the user will only be shown to him.
+![image](https://github.com/user-attachments/assets/3a57288b-ef3f-4d53-b76e-3fe77b951623)
+
+
 
 ## Conclusion
 
