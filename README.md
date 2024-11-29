@@ -105,15 +105,15 @@ To use Firebase in this project, you need to configure Firebase Authentication a
 2. Copy your Firebase configuration and add it to the `.env` file:
 
     
-   ```sh
+```sh
   apiKey: "AIzaSyDau3RNBmGjggsWMH-XFjA4DrpaspLdmq0",
   authDomain: "rbac-vrv-security-d7afd.firebaseapp.com",
   projectId: "rbac-vrv-security-d7afd",
   storageBucket: "rbac-vrv-security-d7afd.firebasestorage.app",
   messagingSenderId: "273039118922",
   appId: "1:273039118922:web:f523421cb155c2d4b44cb3",
-  measurementId: "G-SQ3Z4BQMQB"
-    ```
+  measurementId: "G-SQ3Z4BQMQB"  
+```
 
 ---
 
@@ -128,7 +128,7 @@ The admin can add products and assign them to one or more roles (Developer, Desi
 const productRef = firebase.database().ref('products');
 productRef.push({
     productName: 'New Product',
-    assignedRoles: ['Developer', 'Tester']  // Admin assigns roles here
+    assignedRoles: ['Developer', 'Tester','Designer','Manager']  // Admin assigns roles here
 });
 ```
 
