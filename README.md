@@ -27,20 +27,22 @@ This project implements Role-Based Access Control (RBAC) where an admin can add 
 
 1. Clone the repository:
     bash
+   ```sh
     git clone https://github.com/yuvrajjaat/rbac_based_project.git
     cd rbac_based_project
+   ```
     
 
-2. Install dependencies:
+3. Install dependencies:
     bash
     npm install
     
 
-3. Set up Firebase in your project:
+4. Set up Firebase in your project:
     - Create a Firebase project and configure Firebase Authentication and Realtime Database.
     - Add your Firebase configuration to the `.env` file (example below).
 
-4. Run the project:
+5. Run the project:
     bash
     npm start
     
