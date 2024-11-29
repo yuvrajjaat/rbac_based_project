@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="firebase.js"></script>
+    <script src="approve.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-color: #f4f6f7;
+            --text-color: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-logo {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .sidebar-menu {
+            list-style-type: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar-menu a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .sidebar-menu i {
+            margin-right: 10px;
+        }
+
+        .main-content {
+            background-color: white;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-success {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        /* Improved CSS for Approval Section Buttons */
+        #acceptButton, 
+        #rejectButton, 
+        #downloadAllButton {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #acceptButton {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        #acceptButton:hover {
+            background-color: #28a745;
+            transform: scale(1.05);
+        }
+
+        #rejectButton {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        #rejectButton:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        #downloadAllButton {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #downloadAllButton:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        #notesSection textarea {
+            font-size: 14px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        #notesSection textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="sidebar-logo">RBAC System</div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-target="projects" class="menu-item" onclick="handleMenuClick(this)"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="#" data-target="contact" class="menu-item" onclick="handleMenuClick(this)"><i class="fas fa-check-circle"></i> Approvals</a></li>
+                <li><a href="#" data-target="ChangeSecuritykey" class="menu-item" onclick="handleMenuClick(this)"><i class="fas fa-key"></i> Change Security Key</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1 class="header-title">Dashboard</h1>
+                <button class="logout-btn" onclick="signOut()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+            <div id="content">
+                <p>Welcome! Select a menu item to see its content.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New Project</h2>
+                <button class="close-btn" onclick="closeModal('projectModal')">&times;</button>
+            </div>
+            <form id="projectForm">
+                <div class="form-group">
+                    <label for="projectNameInput">Project Name</label>
+                    <input type="text" id="projectNameInput" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="designerSelect">Select Designer</label>
+                    <select id="designerSelect" class="form-control" required>
+                        <option value="">Select designer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="developerSelect">Select Developer</label>
+                    <select id="developerSelect" class="form-control" required>
+                        <option value="">Select developer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="testerSelect">Select Tester</label>
+                    <select id="testerSelect" class="form-control" required>
+                        <option value="">Select tester</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="managerSelect">Select Product Manager</label>
+                    <select id="managerSelect" class="form-control" required>
+                        <option value="">Select Product Manager</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Project</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="inputModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Work Actions</h2>
+                <button class="close-btn" onclick="closeModal('inputModal')">&times;</button>
+            </div>
+            <div id="fileLinksContainer"></div>
+            <button id="downloadAllButton" class="btn btn-primary" style="display: none;">Download All Files</button>
+            <button id="acceptButton" class="btn btn-success">Accept</button>
+            <button id="rejectButton" class="btn btn-danger">Reject</button>
+            <div id="notesSection" style="display: none;">
+                <div class="form-group">
+                    <label for="notesInput">Notes</label>
+                    <textarea id="notesInput" class="form-control" rows="4"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="Assets/js/jquery-3.3.1.min.js"></script>
+    <script src="Assets/js/popper.min.js"></script>
+    <script src="Assets/js/bootstrap.min.js"></script>
+    <script src="Assets/js/jquery.sticky.js"></script>
+    <script src="Assets/js/main.js"></script>
+    <script>
+        function signOut() {
+            window.location.href = 'index.html';
+        }
+
+        function handleMenuClick(element) {
+            // Remove active class from all menu items
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            element.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Attach close button functionality
+        document.querySelectorAll('.close-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                modal.style.display = 'none';
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
