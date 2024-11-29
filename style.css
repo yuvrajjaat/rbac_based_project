@@ -1,0 +1,174 @@
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+  *,
+  *::before,
+  *::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  /* Add your custom styles here */
+  /* Add your custom styles here */
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('./img/security.webp') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .box {
+    width: 90%;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.9); /* Adding some transparency */
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .inner-box {
+    display: flex;
+  }
+
+  .forms-wrap, .carousel {
+    width: 50%;
+    padding: 40px;
+  }
+
+  .forms-wrap {
+    background: #f7f7f7;
+  }
+
+  .heading {
+    margin-bottom: 30px;
+  }
+
+  .heading h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .heading h6 {
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+  }
+
+  .heading a {
+    color: #2980b9;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .actual-form .input-wrap {
+    margin-bottom: 15px;
+  }
+
+  .input-wrap input, .input-wrap select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .sign-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background: #2980b9;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .sign-btn:hover {
+    background: #2573a6;
+  }
+
+  .carousel {
+    background: #2980b9;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .carousel .images-wrapper {
+    position: relative;
+    height: 250px;
+  }
+
+  .carousel .image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+  }
+
+  .carousel .image.show {
+    display: block;
+  }
+
+  .text-slider {
+    margin-top: 20px;
+  }
+
+  .text-slider .text-wrap {
+    overflow: hidden;
+    height: 60px;
+  }
+
+  .text-slider .text-group {
+    animation: slide 8s infinite;
+  }
+
+  .text-slider h2 {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .bullets {
+    margin-top: 10px;
+  }
+
+  .bullets .bullet {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .bullets .bullet.active {
+    background: #6dd5fa;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  @keyframes slide {
+    0%, 25% {
+      transform: translateY(0);
+    }
+    50%, 75% {
+      transform: translateY(-60px);
+    }
+    100% {
+      transform: translateY(-120px);
+    }
+  }
