@@ -1,4 +1,4 @@
-# RBAC Product
+# RBAC based Project 
 
 This project implements Role-Based Access Control (RBAC) where an admin can add products and assign them to specific roles (Developer, Designer, Manager, Tester). When a user logs in, they will only be able to view the products assigned to their respective roles by the admin.
 
